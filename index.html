@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cellframe — End-to-end testing harness for TON smart contracts — local sandbox to mainnet replay in one CLI.</title>
+<meta name="description" content="End-to-end testing harness for TON smart contracts — local sandbox to mainnet replay in one CLI.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--surface:#111118;--border:#1e1e2e;
+  --text:#e0e0e0;--text-dim:#888;--accent:#06FFA5;
+  --accent2:#00F5FF;--radius:16px;
+}
+body{
+  font-family:'Inter',-apple-system,system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;
+  min-height:100vh;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 40px;border-bottom:1px solid var(--border);
+  max-width:1200px;margin:0 auto;
+}
+.nav-name{font-weight:700;font-size:18px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 24px;border-radius:40px;font-weight:600;font-size:14px;
+  background:var(--accent);color:#0a0a0f;border:none;cursor:pointer;
+  transition:opacity .2s;
+}
+.btn:hover{opacity:.85;text-decoration:none}
+
+/* HERO */
+.hero{
+  text-align:center;padding:100px 40px 60px;
+  max-width:800px;margin:0 auto;
+}
+.logo-container{
+  width:120px;height:120px;margin:0 auto 32px;
+  border-radius:28px;overflow:hidden;
+}
+.logo-container svg{width:100%;height:100%;display:block}
+.logo-fallback{
+  width:120px;height:120px;margin:0 auto 32px;
+  border-radius:28px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:56px;font-weight:800;color:#0a0a0f;
+}
+.hero h1{
+  font-size:clamp(36px,5vw,64px);font-weight:800;
+  letter-spacing:-2px;margin-bottom:16px;
+  background:linear-gradient(135deg,#fff,#aaa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero .tagline{
+  font-size:20px;color:var(--text-dim);max-width:600px;
+  margin:0 auto 32px;
+}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.badge{
+  padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;
+  background:var(--surface);border:1px solid var(--border);color:var(--accent);
+  text-transform:uppercase;letter-spacing:1px;
+}
+
+/* ABOUT */
+.about{
+  max-width:800px;margin:0 auto;padding:60px 40px;
+}
+.about h2{font-size:28px;font-weight:700;margin-bottom:20px}
+.about p{color:var(--text-dim);font-size:16px;margin-bottom:14px}
+
+/* METRICS */
+.metrics{
+  max-width:1000px;margin:0 auto;padding:60px 40px;
+}
+.metrics h2{font-size:28px;font-weight:700;margin-bottom:32px;text-align:center}
+.metrics-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+.metric-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px 24px;text-align:center;
+}
+.metric-value{
+  font-size:22px;font-weight:700;color:var(--accent);margin-bottom:8px;
+}
+.metric-label{font-size:14px;color:var(--text-dim)}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:60px 40px;
+  border-top:1px solid var(--border);color:var(--text-dim);font-size:14px;
+}
+footer a{color:var(--accent)}
+
+@media(max-width:600px){
+  nav{padding:16px 20px}
+  .hero{padding:60px 20px 40px}
+  .hero h1{letter-spacing:-1px}
+  .about,.metrics{padding:40px 20px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-name">Cellframe</div>
+  <a href="https://early.surge.xyz/discovery" class="btn" target="_blank">View on Surge</a>
+</nav>
+
+<section class="hero">
+  <div class="logo-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="clf-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b27"/>
+    </linearGradient>
+    <linearGradient id="clf-fill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4af0c4"/>
+      <stop offset="50%" stop-color="#2d8ef5"/>
+      <stop offset="100%" stop-color="#7b5ef8"/>
+    </linearGradient>
+    <filter id="clf-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="url(#clf-bg)"/>
+
+  <!-- C letterform built from custom paths -->
+  <!-- The C is constructed as a bold arc with a cell-grid notch motif -->
+  <g filter="url(#clf-glow)">
+    <!-- Outer C arc path: bold stroke approach via filled path -->
+    <!-- C shape: large arc open to the right, built with bezier curves -->
+    <path d="
+      M 310 124
+      C 270 108, 210 108, 172 136
+      C 128 168, 104 212, 104 256
+      C 104 300, 128 344, 172 376
+      C 210 404, 270 404, 310 388
+      L 310 340
+      C 278 356, 238 356, 210 338
+      C 178 318, 160 288, 160 256
+      C 160 224, 178 194, 210 174
+      C 238 156, 278 156, 310 172
+      Z
+    " fill="url(#clf-fill)"/>
+
+    <!-- Inner grid accent lines — hint at cell/frame structure -->
+    <!-- Horizontal bar across the open jaw top -->
+    <rect x="270" y="194" width="52" height="20" rx="6" fill="url(#clf-fill)" opacity="0.55"/>
+    <!-- Horizontal bar across the open jaw bottom -->
+    <rect x="270" y="298" width="52" height="20" rx="6" fill="url(#clf-fill)" opacity="0.55"/>
+    <!-- Vertical connector between bars -->
+    <rect x="310" y="194" width="20" height="124" rx="6" fill="url(#clf-fill)" opacity="0.28"/>
+
+    <!-- Small square cell accent — top right corner of opening -->
+    <rect x="330" y="182" width="16" height="16" rx="4" fill="#4af0c4" opacity="0.7"/>
+    <!-- Small square cell accent — bottom right corner of opening -->
+    <rect x="330" y="314" width="16" height="16" rx="4" fill="#7b5ef8" opacity="0.7"/>
+  </g>
+</svg></div>
+  <h1>Cellframe</h1>
+  <p class="tagline">End-to-end testing harness for TON smart contracts — local sandbox to mainnet replay in one CLI.</p>
+  <div class="badges"><span class="badge">devtools</span><span class="badge">ton</span><span class="badge">mvp</span></div>
+  <a href="https://early.surge.xyz/discovery" class="btn" target="_blank">Follow on Surge Discovery</a>
+</section>
+
+<section class="about">
+  <h2>What we're building</h2>
+  <p>Cellframe is a TypeScript-first CLI and SDK that gives FunC and Tact developers a deterministic, in-process TVM sandbox with per-opcode gas accounting, BOC-level state snapshots, and a mainnet-fork mode that pulls live shardchain state via TonCenter v3 for regression replay. Tests are written in a Jest-compatible syntax so existing tooling habits carry over, while the runner natively models TON&#x27;s async bounce-message semantics and split-brain sharding — patterns that silently break when Ethereum-ported test frameworks are applied to TON contracts. A built-in flamegraph reporter diffs gas consumption across commits and outputs a CI artifact, closing the feedback loop between a code change and its on-chain cost impact. The `cellframe init` scaffold generates a complete FunC or Tact project with sample tests, a GitHub Actions workflow, and a Blueprint migration shim, so teams can adopt it without restructuring an existing repo.</p>
+
+</section>
+
+<section class="metrics"><h2>Key Metrics</h2><div class="metrics-grid"><div class="metric-card"><div class="metric-value">Bounce-message + shardchain split modeled natively</div><div class="metric-label">Sandbox Coverage</div></div>
+<div class="metric-card"><div class="metric-value">Live mainnet state replay via TonCenter v3</div><div class="metric-label">Fork Mode</div></div>
+<div class="metric-card"><div class="metric-value">No opinionated TVM test runner exists today</div><div class="metric-label">Market Gap</div></div>
+</div></section>
+
+<footer>
+  <p>Cellframe &middot; Powered by <a href="https://early.surge.xyz" target="_blank">Surge Discovery</a></p>
+</footer>
+</body>
+</html>
