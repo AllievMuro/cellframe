@@ -1,195 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cellframe — End-to-end testing harness for TON smart contracts — local sandbox to mainnet replay in one CLI.</title>
-<meta name="description" content="End-to-end testing harness for TON smart contracts — local sandbox to mainnet replay in one CLI.">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cellframe — Patient-Owned Health Data Vaults</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0a0a0f;--surface:#111118;--border:#1e1e2e;
-  --text:#e0e0e0;--text-dim:#888;--accent:#06FFA5;
-  --accent2:#00F5FF;--radius:16px;
-}
-body{
-  font-family:'Inter',-apple-system,system-ui,sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.6;
-  min-height:100vh;
-}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-
-/* NAV */
-nav{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:20px 40px;border-bottom:1px solid var(--border);
-  max-width:1200px;margin:0 auto;
-}
-.nav-name{font-weight:700;font-size:18px}
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:10px 24px;border-radius:40px;font-weight:600;font-size:14px;
-  background:var(--accent);color:#0a0a0f;border:none;cursor:pointer;
-  transition:opacity .2s;
-}
-.btn:hover{opacity:.85;text-decoration:none}
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Red+Hat+Text:wght@400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F7FEE7;--card:#fff;--p:#65A30D;--s:#84CC16;--t:#1A2E05;--m:#6A7A4A;--r:50px}
+body{background:var(--bg);color:var(--t);font-family:'Red Hat Text',sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:'Source Serif 4',serif}
+a{color:inherit;text-decoration:none}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 6%;position:sticky;top:0;background:rgba(247,254,231,.92);backdrop-filter:blur(10px);z-index:100;border-bottom:1px solid rgba(101,163,13,.12)}
+.nav-logo{display:flex;align-items:center;gap:10px}.nav-logo svg{width:34px;height:34px}
+.nav-logo span{font-family:'Source Serif 4',serif;font-weight:700;font-size:1.15rem;color:var(--t)}
+.nav-links{display:flex;gap:28px;font-size:.9rem;color:var(--m)}
+.nav-links a:hover{color:var(--p)}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--r);font-family:'Red Hat Text',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:.2s}
+.btn-p{background:var(--p);color:#fff}.btn-p:hover{background:#4d7c0a}
+.btn-o{background:transparent;border:2px solid var(--p);color:var(--p)}.btn-o:hover{background:var(--p);color:#fff}
+.badge{display:inline-block;padding:6px 18px;border-radius:var(--r);font-size:.78rem;font-weight:600;background:rgba(132,204,22,.18);color:var(--p);border:1px solid rgba(132,204,22,.35);margin-bottom:20px}
+section{padding:80px 6%}
+.tag{display:inline-block;padding:4px 14px;border-radius:var(--r);font-size:.75rem;font-weight:600;background:rgba(101,163,13,.1);color:var(--p);margin-bottom:10px}
 
 /* HERO */
-.hero{
-  text-align:center;padding:100px 40px 60px;
-  max-width:800px;margin:0 auto;
-}
-.logo-container{
-  width:120px;height:120px;margin:0 auto 32px;
-  border-radius:28px;overflow:hidden;
-}
-.logo-container svg{width:100%;height:100%;display:block}
-.logo-fallback{
-  width:120px;height:120px;margin:0 auto 32px;
-  border-radius:28px;background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:56px;font-weight:800;color:#0a0a0f;
-}
-.hero h1{
-  font-size:clamp(36px,5vw,64px);font-weight:800;
-  letter-spacing:-2px;margin-bottom:16px;
-  background:linear-gradient(135deg,#fff,#aaa);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.hero .tagline{
-  font-size:20px;color:var(--text-dim);max-width:600px;
-  margin:0 auto 32px;
-}
-.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-.badge{
-  padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;
-  background:var(--surface);border:1px solid var(--border);color:var(--accent);
-  text-transform:uppercase;letter-spacing:1px;
-}
+.hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:80px 6%;background:var(--bg);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 50%,rgba(132,204,22,.12) 0%,transparent 70%);pointer-events:none;will-change:transform;animation:parallax1 8s ease-in-out infinite alternate}
+@keyframes parallax1{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-30px) scale(1.04)}}
+.hero-text .badge{margin-bottom:24px}
+.hero-text h1{font-size:clamp(2rem,4vw,3.2rem);line-height:1.2;color:var(--t);margin-bottom:20px}
+.hero-text h1 span{color:var(--p)}
+.hero-text p{font-size:1.05rem;color:var(--m);line-height:1.7;margin-bottom:32px;max-width:480px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.vault-card{background:var(--card);border-radius:32px;padding:32px;box-shadow:0 8px 40px rgba(101,163,13,.12);border:1px solid rgba(101,163,13,.15);will-change:transform;animation:float 6s ease-in-out infinite alternate;max-width:360px;width:100%}
+@keyframes float{0%{transform:translateY(0)}100%{transform:translateY(-18px)}}
+.vault-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:var(--r);background:rgba(247,254,231,.8);margin-bottom:10px;border:1px solid rgba(132,204,22,.2)}
+.vault-row:last-child{margin-bottom:0}
+.vault-label{font-size:.82rem;color:var(--m);font-weight:500}
+.vault-status{font-size:.75rem;font-weight:600;padding:3px 12px;border-radius:var(--r);background:rgba(132,204,22,.2);color:var(--p)}
+.vault-logo{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(101,163,13,.1)}
+.vault-logo svg{width:28px;height:28px}.vault-logo span{font-family:'Source Serif 4',serif;font-weight:700;color:var(--t)}
 
-/* ABOUT */
-.about{
-  max-width:800px;margin:0 auto;padding:60px 40px;
-}
-.about h2{font-size:28px;font-weight:700;margin-bottom:20px}
-.about p{color:var(--text-dim);font-size:16px;margin-bottom:14px}
+/* SECTIONS */
+.section-label{font-size:.8rem;font-weight:600;color:var(--p);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.section-title{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:16px;line-height:1.25}
+.section-sub{color:var(--m);line-height:1.7;max-width:560px;font-size:1rem}
 
-/* METRICS */
-.metrics{
-  max-width:1000px;margin:0 auto;padding:60px 40px;
-}
-.metrics h2{font-size:28px;font-weight:700;margin-bottom:32px;text-align:center}
-.metrics-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-}
-.metric-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:28px 24px;text-align:center;
-}
-.metric-value{
-  font-size:22px;font-weight:700;color:var(--accent);margin-bottom:8px;
-}
-.metric-label{font-size:14px;color:var(--text-dim)}
+/* PROBLEM */
+.problem{background:var(--bg)}
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.prob-card{background:var(--card);border-radius:32px;padding:28px;border:1px solid rgba(101,163,13,.12);transition:.25s}
+.prob-card:hover{box-shadow:0 6px 30px rgba(101,163,13,.1);transform:translateY(-4px)}
+.prob-icon{font-size:1.8rem;margin-bottom:14px}
+.prob-card h3{font-size:1rem;margin-bottom:8px;color:var(--t)}
+.prob-card p{font-size:.88rem;color:var(--m);line-height:1.6}
 
-/* FOOTER */
-footer{
-  text-align:center;padding:60px 40px;
-  border-top:1px solid var(--border);color:var(--text-dim);font-size:14px;
-}
-footer a{color:var(--accent)}
+/* HOW IT WORKS */
+.hiw{background:linear-gradient(135deg,rgba(132,204,22,.06) 0%,rgba(247,254,231,.5) 100%)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.step{background:var(--card);border-radius:32px;padding:24px;border:1px solid rgba(101,163,13,.12);text-align:center;position:relative}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--p);color:#fff;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.step h3{font-size:.95rem;margin-bottom:8px}
+.step p{font-size:.82rem;color:var(--m);line-height:1.55}
 
-@media(max-width:600px){
-  nav{padding:16px 20px}
-  .hero{padding:60px 20px 40px}
-  .hero h1{letter-spacing:-1px}
-  .about,.metrics{padding:40px 20px}
+/* TECH */
+.tech{background:var(--bg)}
+.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:48px}
+.tech-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.tech-pill{padding:8px 18px;border-radius:var(--r);background:var(--card);border:1px solid rgba(101,163,13,.2);font-size:.82rem;color:var(--m);font-weight:500}
+.tech-pill strong{color:var(--p)}
+.tech-visual{background:var(--card);border-radius:32px;padding:28px;border:1px solid rgba(101,163,13,.15)}
+.tech-row{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid rgba(101,163,13,.08)}
+.tech-row:last-child{border-bottom:none}
+.tech-dot{width:8px;height:8px;border-radius:50%;background:var(--s);margin-top:5px;flex-shrink:0}
+.tech-row p{font-size:.85rem;color:var(--m);line-height:1.55}
+.tech-row strong{color:var(--t)}
+
+/* ROADMAP */
+.roadmap{background:linear-gradient(135deg,rgba(132,204,22,.05) 0%,var(--bg) 100%)}
+.timeline{position:relative;max-width:760px;margin:48px auto 0;padding-left:32px}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--s),rgba(132,204,22,.2));border-radius:4px}
+.tl-item{position:relative;margin-bottom:36px;background:var(--card);border-radius:32px;padding:28px 28px 24px;border:1px solid rgba(101,163,13,.13)}
+.tl-item::before{content:'';position:absolute;left:-40px;top:28px;width:14px;height:14px;border-radius:50%;background:var(--p);border:3px solid var(--bg)}
+.tl-phase{font-size:.75rem;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.tl-title{font-size:1.05rem;margin-bottom:10px;color:var(--t)}
+.tl-tag{display:inline-block;padding:3px 12px;border-radius:var(--r);font-size:.72rem;font-weight:600;background:rgba(132,204,22,.12);color:var(--m);margin-bottom:12px}
+.tl-bullets{list-style:none}.tl-bullets li{font-size:.83rem;color:var(--m);padding:4px 0 4px 16px;position:relative;line-height:1.5}
+.tl-bullets li::before{content:'→';position:absolute;left:0;color:var(--s);font-size:.8rem}
+
+/* CTA */
+.cta-sec{background:var(--p);text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(132,204,22,.3) 0%,transparent 70%);pointer-events:none;animation:parallax1 6s ease-in-out infinite alternate}
+.cta-sec h2{color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);margin-bottom:16px}
+.cta-sec p{color:rgba(255,255,255,.8);max-width:520px;margin:0 auto 32px;line-height:1.7}
+.btn-w{background:#fff;color:var(--p)}.btn-w:hover{background:var(--bg)}
+
+footer{background:#1A2E05;color:rgba(255,255,255,.6);text-align:center;padding:32px 6%;font-size:.85rem}
+footer span{color:var(--s)}
+
+@media(max-width:900px){
+.hero{grid-template-columns:1fr;padding:60px 6%;min-height:auto}.hero-visual{display:none}
+.prob-grid,.steps{grid-template-columns:1fr 1fr}.tech-grid{grid-template-columns:1fr}
 }
+@media(max-width:600px){.prob-grid,.steps{grid-template-columns:1fr}.nav-links{display:none}}
 </style>
 </head>
 <body>
+
 <nav>
-  <div class="nav-name">Cellframe</div>
-  <a href="https://early.surge.xyz/discovery" class="btn" target="_blank">View on Surge</a>
+  <div class="nav-logo">
+    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="cf-grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#84CC16"/><stop offset="100%" stop-color="#65A30D"/></linearGradient><linearGradient id="cf-grad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#84CC16" stop-opacity="0.7"/><stop offset="100%" stop-color="#65A30D" stop-opacity="0.9"/></linearGradient><filter id="cf-glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="512" height="512" rx="96" fill="#F7FEE7"/><rect x="60" y="60" width="392" height="392" rx="60" fill="none" stroke="#84CC16" stroke-width="1" stroke-opacity="0.15"/><rect x="90" y="90" width="332" height="332" rx="44" fill="none" stroke="#65A30D" stroke-width="1" stroke-opacity="0.1"/><g filter="url(#cf-glow)"><path d="M 310 148 C 290 136, 270 130, 248 130 C 194 130, 150 158, 128 202 C 114 228, 108 248, 108 272 C 108 296, 114 318, 126 338 C 148 380, 194 408, 250 408 C 272 408, 292 403, 312 392 C 326 384, 338 374, 346 362 L 312 338 C 306 348, 296 356, 284 362 C 272 368, 260 371, 248 371 C 210 371, 182 354, 164 326 C 154 310, 148 292, 148 272 C 148 252, 154 234, 164 218 C 182 190, 210 172, 250 172 C 262 172, 274 175, 285 181 C 296 187, 305 195, 312 205 L 346 180 C 338 168, 326 157, 310 148 Z" fill="url(#cf-grad1)"/><path d="M 290 148 L 346 148 L 346 180 L 310 148" fill="url(#cf-grad2)"/><path d="M 312 338 L 346 338 L 346 370 L 290 370 L 312 338" fill="url(#cf-grad2)"/><rect x="108" y="258" width="82" height="10" rx="5" fill="#84CC16" fill-opacity="0.5"/><rect x="108" y="240" width="60" height="6" rx="3" fill="#65A30D" fill-opacity="0.3"/><rect x="108" y="278" width="60" height="6" rx="3" fill="#65A30D" fill-opacity="0.3"/></g><circle cx="346" cy="148" r="7" fill="#84CC16"/><circle cx="346" cy="362" r="7" fill="#84CC16"/><circle cx="108" cy="272" r="7" fill="#65A30D"/><circle cx="248" cy="130" r="5" fill="#84CC16" fill-opacity="0.6"/><circle cx="248" cy="408" r="5" fill="#84CC16" fill-opacity="0.6"/></svg>
+    <span>Cellframe</span>
+  </div>
+  <div class="nav-links">
+    <a href="#problem">Problem</a><a href="#how">How It Works</a><a href="#tech">Tech</a><a href="#roadmap">Roadmap</a>
+  </div>
+  <a href="#" class="btn btn-p">Follow Our Journey</a>
 </nav>
 
 <section class="hero">
-  <div class="logo-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <defs>
-    <linearGradient id="clf-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0d1117"/>
-      <stop offset="100%" stop-color="#161b27"/>
-    </linearGradient>
-    <linearGradient id="clf-fill" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#4af0c4"/>
-      <stop offset="50%" stop-color="#2d8ef5"/>
-      <stop offset="100%" stop-color="#7b5ef8"/>
-    </linearGradient>
-    <filter id="clf-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-
-  <!-- Background -->
-  <rect width="512" height="512" rx="96" fill="url(#clf-bg)"/>
-
-  <!-- C letterform built from custom paths -->
-  <!-- The C is constructed as a bold arc with a cell-grid notch motif -->
-  <g filter="url(#clf-glow)">
-    <!-- Outer C arc path: bold stroke approach via filled path -->
-    <!-- C shape: large arc open to the right, built with bezier curves -->
-    <path d="
-      M 310 124
-      C 270 108, 210 108, 172 136
-      C 128 168, 104 212, 104 256
-      C 104 300, 128 344, 172 376
-      C 210 404, 270 404, 310 388
-      L 310 340
-      C 278 356, 238 356, 210 338
-      C 178 318, 160 288, 160 256
-      C 160 224, 178 194, 210 174
-      C 238 156, 278 156, 310 172
-      Z
-    " fill="url(#clf-fill)"/>
-
-    <!-- Inner grid accent lines — hint at cell/frame structure -->
-    <!-- Horizontal bar across the open jaw top -->
-    <rect x="270" y="194" width="52" height="20" rx="6" fill="url(#clf-fill)" opacity="0.55"/>
-    <!-- Horizontal bar across the open jaw bottom -->
-    <rect x="270" y="298" width="52" height="20" rx="6" fill="url(#clf-fill)" opacity="0.55"/>
-    <!-- Vertical connector between bars -->
-    <rect x="310" y="194" width="20" height="124" rx="6" fill="url(#clf-fill)" opacity="0.28"/>
-
-    <!-- Small square cell accent — top right corner of opening -->
-    <rect x="330" y="182" width="16" height="16" rx="4" fill="#4af0c4" opacity="0.7"/>
-    <!-- Small square cell accent — bottom right corner of opening -->
-    <rect x="330" y="314" width="16" height="16" rx="4" fill="#7b5ef8" opacity="0.7"/>
-  </g>
-</svg></div>
-  <h1>Cellframe</h1>
-  <p class="tagline">End-to-end testing harness for TON smart contracts — local sandbox to mainnet replay in one CLI.</p>
-  <div class="badges"><span class="badge">devtools</span><span class="badge">ton</span><span class="badge">mvp</span></div>
-  <a href="https://early.surge.xyz/discovery" class="btn" target="_blank">Follow on Surge Discovery</a>
+  <div class="hero-text">
+    <div class="badge">🔬 In Development · Base Chain</div>
+    <h1>Your Health Data.<br><span>Your Vault.</span><br>Your Earnings.</h1>
+    <p>Cellframe gives patients ERC-7579 smart account vaults on Base where you store encrypted health records, consent selectively to research, and earn USDC when researchers access your data — with a tamper-proof on-chain audit trail of every disclosure.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-p">Follow Our Journey</a>
+      <a href="#how" class="btn btn-o">See How It Works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="vault-card">
+      <div class="vault-logo">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="h2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#84CC16"/><stop offset="100%" stop-color="#65A30D"/></linearGradient></defs><rect width="512" height="512" rx="96" fill="#F7FEE7"/><path d="M 310 148 C 290 136, 270 130, 248 130 C 194 130, 150 158, 128 202 C 114 228, 108 248, 108 272 C 108 296, 114 318, 126 338 C 148 380, 194 408, 250 408 C 272 408, 292 403, 312 392 C 326 384, 338 374, 346 362 L 312 338 C 306 348, 296 356, 284 362 C 272 368, 260 371, 248 371 C 210 371, 182 354, 164 326 C 154 310, 148 292, 148 272 C 148 252, 154 234, 164 218 C 182 190, 210 172, 250 172 C 262 172, 274 175, 285 181 C 296 187, 305 195, 312 205 L 346 180 C 338 168, 326 157, 310 148 Z" fill="url(#h2)"/></svg>
+        <span>My Health Vault</span>
+      </div>
+      <div class="vault-row"><span class="vault-label">🧬 Genomic Hash</span><span class="vault-status">Encrypted</span></div>
+      <div class="vault-row"><span class="vault-label">🩺 Lab Results · Q3</span><span class="vault-status">On IPFS</span></div>
+      <div class="vault-row"><span class="vault-label">⌚ Wearable Export</span><span class="vault-status">Encrypted</span></div>
+      <div class="vault-row"><span class="vault-label">💵 Pending USDC</span><span class="vault-status">1 Request</span></div>
+    </div>
+  </div>
 </section>
 
-<section class="about">
-  <h2>What we're building</h2>
-  <p>Cellframe is a TypeScript-first CLI and SDK that gives FunC and Tact developers a deterministic, in-process TVM sandbox with per-opcode gas accounting, BOC-level state snapshots, and a mainnet-fork mode that pulls live shardchain state via TonCenter v3 for regression replay. Tests are written in a Jest-compatible syntax so existing tooling habits carry over, while the runner natively models TON&#x27;s async bounce-message semantics and split-brain sharding — patterns that silently break when Ethereum-ported test frameworks are applied to TON contracts. A built-in flamegraph reporter diffs gas consumption across commits and outputs a CI artifact, closing the feedback loop between a code change and its on-chain cost impact. The `cellframe init` scaffold generates a complete FunC or Tact project with sample tests, a GitHub Actions workflow, and a Blueprint migration shim, so teams can adopt it without restructuring an existing repo.</p>
-
+<section class="problem" id="problem">
+  <div class="section-label">The Problem</div>
+  <h2 class="section-title">Health Data Is Extracted Without Patient Benefit</h2>
+  <p class="section-sub">Hospitals, insurers, and data brokers monetize your records. You see none of the upside and have no visibility into who accessed what — or when.</p>
+  <div class="prob-grid">
+    <div class="prob-card"><div class="prob-icon">🏥</div><h3>No Consent, No Compensation</h3><p>EHR vendors sell de-identified data to pharma without patient consent or revenue sharing. Patients are the product, not the beneficiary.</p></div>
+    <div class="prob-card"><div class="prob-icon">🔍</div><h3>Zero Audit Visibility</h3><p>Legacy consent SaaS stores agreements in mutable databases. There's no cryptographic proof of who accessed records or whether consent was honored.</p></div>
+    <div class="prob-card"><div class="prob-icon">📋</div><h3>FDA Compliance Gap</h3><p>The 2025 Real-World Evidence framework demands auditable consent trails for drug approvals. Current systems cannot produce cryptographic proof — Cellframe can.</p></div>
+  </div>
 </section>
 
-<section class="metrics"><h2>Key Metrics</h2><div class="metrics-grid"><div class="metric-card"><div class="metric-value">Bounce-message + shardchain split modeled natively</div><div class="metric-label">Sandbox Coverage</div></div>
-<div class="metric-card"><div class="metric-value">Live mainnet state replay via TonCenter v3</div><div class="metric-label">Fork Mode</div></div>
-<div class="metric-card"><div class="metric-value">No opinionated TVM test runner exists today</div><div class="metric-label">Market Gap</div></div>
-</div></section>
+<section class="hiw" id="how">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Four Steps From Vault to USDC</h2>
+  <p class="section-sub">Patients stay in control at every step. Researchers pay for access. Everything is logged on Base with sub-cent EIP-4844 blob transactions.</p>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><h3>Create Your Vault</h3><p>Deploy an ERC-7579 smart account on Base via Coinbase Smart Wallet — no seed phrases. Upload FHIR-formatted lab results and wearable exports to IPFS, AES-256 encrypted with keys split via Shamir's Secret Sharing.</p></div>
+    <div class="step"><div class="step-num">2</div><h3>Researcher Posts Query</h3><p>A biotech team specifies ICD-10 codes, age brackets, and biomarker thresholds on-chain. USDC is locked in escrow. Your anonymized vault metadata is checked for match — raw records never exposed.</p></div>
+    <div class="step"><div class="step-num">3</div><h3>You Approve Access</h3><p>You receive a permissioned disclosure request and sign a time-scoped, revocable ERC-20 access token granting decrypted read rights. Consent is minted as an ERC-7231 identity-bound attestation on Base.</p></div>
+    <div class="step"><div class="step-num">4</div><h3>Earn & Audit</h3><p>USDC escrow auto-releases to your wallet on confirmed token generation. Every grant and revocation is on-chain — your tamper-proof audit trail satisfies FDA RWE compliance requirements.</p></div>
+  </div>
+</section>
+
+<section class="tech" id="tech">
+  <div style="text-align:center">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">Built for Trust at Every Layer</h2>
+    <p class="section-sub" style="margin:0 auto">Base's EIP-4844 blob transactions make consent logging economically viable — costs that were impractical on L1 Ethereum are now sub-cent per event.</p>
+  </div>
+  <div class="tech-grid">
+    <div>
+      <div class="tech-pills">
+        <div class="tech-pill"><strong>ERC-7579</strong> Modular Smart Accounts</div>
+        <div class="tech-pill"><strong>ERC-7231</strong> Identity-Bound NFTs</div>
+        <div class="tech-pill"><strong>EIP-4844</strong> Blob Transactions</div>
+        <div class="tech-pill"><strong>AES-256</strong> Encryption</div>
+        <div class="tech-pill"><strong>Shamir's</strong> Secret Sharing</div>
+        <div class="tech-pill"><strong>IPFS</strong> + Filecoin Storage</div>
+        <div class="tech-pill"><strong>FHIR R4</strong> API Adapters</div>
+        <div class="tech-pill"><strong>USDC</strong> Escrow Payments</div>
+        <div class="tech-pill"><strong>Coinbase</strong> Smart Wallet SDK</div>
+      </div>
+    </div>
+    <div class="tech-visual">
+      <div class="tech-row"><div class="tech-dot"></div><p><strong>No single-party key control:</strong> AES-256 keys are split with Shamir's Secret Sharing — reconstruction requires patient cooperation, preventing unauthorized access even if IPFS storage is compromised.</p></div>
+      <div class="tech-row"><div class="tech-dot"></div><p><strong>~$0.001 per consent log:</strong> EIP-4844 blobs on Base make it viable to mint an ERC-7231 attestation for every individual consent event — impossible at L1 gas prices.</p></div>
+      <div class="tech-row"><div class="tech-dot"></div><p><strong>Revocable access tokens:</strong> Time-scoped ERC-20 tokens expire automatically. Patients can revoke at any time, with on-chain attestation of revocation for the audit trail.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="roadmap" id="roadmap">
+  <div style="text-align:center">
+    <div class="section-label">Roadmap</div>
+    <h2 class="section-title">Building in Public on Base</h2>
+    <p class="section-sub" style="margin:0 auto">Three phases from testnet vault infrastructure to FDA-aligned pilot programs with biotech research partners.</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-phase">Phase 1</div>
+      <h3 class="tl-title">Core Vault Infrastructure on Base Sepolia</h3>
+      <span class="tl-tag">Planned</span>
+      <ul class="tl-bullets">
+        <li>ERC-7579 modular smart account vault contracts on Base Sepolia with AES-256 encryption and Shamir's Secret Sharing key custody</li>
+        <li>FHIR R4 adapter ingesting wearable exports and lab results into IPFS with content-addressed storage references</li>
+        <li>Coinbase Smart Wallet integration — Web2-familiar onboarding, no seed phrase management required</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 2</div>
+      <h3 class="tl-title">Cohort Matching Engine & Consent Layer on Mainnet</h3>
+      <span class="tl-tag">Planned</span>
+      <ul class="tl-bullets">
+        <li>On-chain cohort query interface — researchers specify ICD-10 codes, age brackets, device types against anonymized metadata</li>
+        <li>Consent flow with time-scoped, purpose-locked, revocable ERC-20 access tokens and USDC escrow auto-release</li>
+        <li>ERC-7231 attestation minting for every consent grant and revocation — portable on-chain audit log per patient</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 3</div>
+      <h3 class="tl-title">Regulatory Alignment & Research Partner Pilots</h3>
+      <span class="tl-tag">Planned</span>
+      <ul class="tl-bullets">
+        <li>FDA Real-World Evidence compliance documentation mapping Cellframe attestations to 2025 RWE framework audit requirements</li>
+        <li>Researcher dashboard with cohort sizing estimates, escrow management, and downloadable consent audit reports for IRB submission</li>
+        <li>Pilot program with biotech and academic clinical trial teams running cohort queries against consenting patient vaults</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec">
+  <h2>Own Your Health Data.<br>Earn When Science Uses It.</h2>
+  <p>Cellframe is building the infrastructure for patient-sovereign health data. Follow along as we deploy on Base and shape the future of research consent.</p>
+  <a href="#" class="btn btn-w">Follow Our Journey</a>
+</section>
 
 <footer>
-  <p>Cellframe &middot; Powered by <a href="https://early.surge.xyz" target="_blank">Surge Discovery</a></p>
+  <p>© 2026 <span>Cellframe</span> · Patient-Owned Health Data Vaults on Base · Built in Public</p>
 </footer>
+
 </body>
 </html>

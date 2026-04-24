@@ -1,0 +1,72 @@
+<svg viewBox="0 0 512 512" width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cf-grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#84CC16"/>
+      <stop offset="100%" stop-color="#65A30D"/>
+    </linearGradient>
+    <linearGradient id="cf-grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#84CC16" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#65A30D" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="cf-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="#F7FEE7"/>
+
+  <!-- Subtle cell grid pattern hinting at data vaults -->
+  <rect x="60" y="60" width="392" height="392" rx="60" fill="none" stroke="#84CC16" stroke-width="1" stroke-opacity="0.15"/>
+  <rect x="90" y="90" width="332" height="332" rx="44" fill="none" stroke="#65A30D" stroke-width="1" stroke-opacity="0.1"/>
+
+  <!-- Custom C letterform built from paths -->
+  <!-- Outer arc of C - bold custom path -->
+  <g filter="url(#cf-glow)">
+    <!-- Main C shape constructed from bezier curves -->
+    <path d="
+      M 310 148
+      C 290 136, 270 130, 248 130
+      C 194 130, 150 158, 128 202
+      C 114 228, 108 248, 108 272
+      C 108 296, 114 318, 126 338
+      C 148 380, 194 408, 250 408
+      C 272 408, 292 403, 312 392
+      C 326 384, 338 374, 346 362
+      L 312 338
+      C 306 348, 296 356, 284 362
+      C 272 368, 260 371, 248 371
+      C 210 371, 182 354, 164 326
+      C 154 310, 148 292, 148 272
+      C 148 252, 154 234, 164 218
+      C 182 190, 210 172, 250 172
+      C 262 172, 274 175, 285 181
+      C 296 187, 305 195, 312 205
+      L 346 180
+      C 338 168, 326 157, 310 148
+      Z
+    " fill="url(#cf-grad1)"/>
+
+    <!-- Inner cutout to make C open -->
+    <!-- The C opening is naturally formed by the path above -->
+
+    <!-- Cell frame accent lines - top arm of C -->
+    <path d="M 290 148 L 346 148 L 346 180 L 310 148" fill="url(#cf-grad2)"/>
+
+    <!-- Cell frame accent lines - bottom arm of C -->
+    <path d="M 312 338 L 346 338 L 346 370 L 290 370 L 312 338" fill="url(#cf-grad2)"/>
+
+    <!-- Horizontal cell-like divider lines inside C body suggesting data rows -->
+    <rect x="108" y="258" width="82" height="10" rx="5" fill="#84CC16" fill-opacity="0.5"/>
+    <rect x="108" y="240" width="60" height="6" rx="3" fill="#65A30D" fill-opacity="0.3"/>
+    <rect x="108" y="278" width="60" height="6" rx="3" fill="#65A30D" fill-opacity="0.3"/>
+  </g>
+
+  <!-- Small node dots hinting at network/data points -->
+  <circle cx="346" cy="148" r="7" fill="#84CC16"/>
+  <circle cx="346" cy="362" r="7" fill="#84CC16"/>
+  <circle cx="108" cy="272" r="7" fill="#65A30D"/>
+  <circle cx="248" cy="130" r="5" fill="#84CC16" fill-opacity="0.6"/>
+  <circle cx="248" cy="408" r="5" fill="#84CC16" fill-opacity="0.6"/>
+</svg>
